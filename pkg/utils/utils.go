@@ -31,3 +31,15 @@ func ExtractValidString(arr []byte) string {
 
 	return string(arr[:i])
 }
+
+func ExtractInt8ArrayValidString(arr []int8) string {
+    n := 0
+    for n < len(arr) && arr[n] != 0 {
+        n++
+    }
+    if n == 0 {
+        return ""
+    }
+
+    return unsafe.String(unsafe.SliceData(*(*[]byte)(unsafe.Pointer(&arr))), n)
+}

@@ -93,6 +93,10 @@ var (
 	MxSmlGetMetaXLinkTopo               = mxsmlWrapper.mxSmlGetMetaXLinkTopo
 	MxSmlGetMetaXLinkAer                = mxsmlWrapper.mxSmlGetMetaXLinkAer
 	MxSmlGetDeviceState                 = mxsmlWrapper.mxSmlGetDeviceState
+	MxSmlEventSetCreate                 = mxsmlWrapper.mxSmlEventSetCreate
+	MxSmlDeviceRegisterEvents           = mxsmlWrapper.mxSmlDeviceRegisterEvents
+	MxSmlEventSetWait                   = mxsmlWrapper.mxSmlEventSetWait
+	MxSmlEventSetFree                   = mxsmlWrapper.mxSmlEventSetFree
 	MxSmlSetOpMode                      = mxsmlWrapper.mxSmlSetOpMode
 	MxSmlGetOpMode                      = mxsmlWrapper.mxSmlGetOpMode
 )
