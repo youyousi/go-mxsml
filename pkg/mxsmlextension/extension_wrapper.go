@@ -5,8 +5,8 @@ package mxsmlextension
 // #include <stdint.h>
 import "C"
 import (
-	"go-mxsml/pkg/lib"
-	"go-mxsml/pkg/utils"
+	"github.com/MetaX-MACA/go-mxsml/pkg/lib"
+	"github.com/MetaX-MACA/go-mxsml/pkg/utils"
 )
 
 const (

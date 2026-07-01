@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"go-mxsml/pkg/mxsml"
+	"github.com/MetaX-MACA/go-mxsml/pkg/mxsml"
 )
 
 func getProcessInfo(deviceCount uint32) {

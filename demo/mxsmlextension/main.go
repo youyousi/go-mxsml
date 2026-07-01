@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	nvml "go-mxsml/pkg/mxsmlextension"
+	nvml "github.com/MetaX-MACA/go-mxsml/pkg/mxsmlextension"
 )
 
 func main() {
