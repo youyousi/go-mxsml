@@ -291,6 +291,14 @@ type MxSmlEthThroughput struct {
 	Tx int32
 }
 
+type MxSmlEventSet *_Ctype_struct_mxSmlEventSetImpl_t
+
+type MxSmlEvent struct {
+	DeviceId  int32
+	Type      int32
+	EventData [1024]int8
+}
+
 type MxSmlMcmMetaXLinkRemoteInfo struct {
 	DeviceId int32
 	BdfId    [32]int8

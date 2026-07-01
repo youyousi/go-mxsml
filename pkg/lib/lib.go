@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 	"runtime"
-	"sync/atomic"
+	"sync"
 	"unsafe"
 )
 
@@ -15,13 +15,15 @@ import (
 // #include <stdlib.h>
 import "C"
 
+const mxsmlLibName = "libmxsml.so"
+
 var g_mxsmlLib = newMxsmlLib()
 
 type library struct {
-	handle   unsafe.Pointer
-	loaded   atomic.Bool
-	path     string
-	flag     int
+	handle unsafe.Pointer
+	mu     sync.Mutex
+	loaded bool
+	flag   int
 }
 
 func newMxsmlLib() *library {
@@ -29,47 +31,69 @@ func newMxsmlLib() *library {
 		flag: C.RTLD_LAZY | C.RTLD_GLOBAL,
 	}
 
-	mxsmlLib.loaded.Store(false)
-
 	return mxsmlLib
 }
 
 func Load() error {
-	if g_mxsmlLib.loaded.Load() {
+	g_mxsmlLib.mu.Lock()
+	defer g_mxsmlLib.mu.Unlock()
+
+	if g_mxsmlLib.loaded {
 		return nil
 	}
 
+	libName := C.CString(mxsmlLibName)
+	defer C.free(unsafe.Pointer(libName))
+
+	runtime.LockOSThread()
+	handle := C.dlopen(libName, C.int(g_mxsmlLib.flag))
+	runtime.UnlockOSThread()
+
+	if handle != nil {
+		g_mxsmlLib.handle = handle
+		g_mxsmlLib.loaded = true
+		return nil
+	}
+
+	var installPath string
 	// check lib path
-	libPathList := []string{"/opt/mxdriver/lib/libmxsml.so", "/opt/maca/lib/libmxsml.so", "/opt/mxn100/lib/libmxsml.so"}
+	libPathList := []string{
+		"/opt/mxdriver/lib/" + mxsmlLibName,
+		"/opt/maca/lib/" + mxsmlLibName,
+		"/opt/mxn100/lib/" + mxsmlLibName,
+	}
 	for _, path := range libPathList {
 		if _, err := os.Stat(path); err == nil {
-			g_mxsmlLib.path = path
+			installPath = path
 			break
 		}
 	}
 
-	if len(g_mxsmlLib.path) == 0 {
+	if len(installPath) == 0 {
 		return fmt.Errorf("invalid mxsml lib path")
 	}
 
-	libPath := C.CString(g_mxsmlLib.path)
+	libPath := C.CString(installPath)
 	defer C.free(unsafe.Pointer(libPath))
 
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
 
-	handle := C.dlopen(libPath, C.int(g_mxsmlLib.flag))
+	handle = C.dlopen(libPath, C.int(g_mxsmlLib.flag))
 	if handle == nil {
 		return getDlError()
 	}
 
 	g_mxsmlLib.handle = handle
-	g_mxsmlLib.loaded.Store(true)
+	g_mxsmlLib.loaded = true
 	return nil
 }
 
 func Unload() error {
-	if g_mxsmlLib.handle == nil {
+	g_mxsmlLib.mu.Lock()
+	defer g_mxsmlLib.mu.Unlock()
+
+	if !g_mxsmlLib.loaded {
 		return nil
 	}
 
@@ -81,7 +105,7 @@ func Unload() error {
 	}
 
 	g_mxsmlLib.handle = nil
-	g_mxsmlLib.loaded.Store(false)
+	g_mxsmlLib.loaded = false
 	return nil
 }
 
