@@ -16,6 +16,7 @@ const (
 )
 
 type Return = MxSmlExReturn
+
 const (
 	SUCCESS                         Return = MXSMLEX_SUCCESS
 	ERROR_UNINITIALIZED             Return = MXSMLEX_ERROR_UNINITIALIZED
@@ -66,7 +67,7 @@ type PcieUtilCounter = MxSmlExPcieUtilCounter
 const (
 	PCIE_UTIL_TX_BYTES PcieUtilCounter = MXSMLEX_PCIE_UTIL_TX_BYTES
 	PCIE_UTIL_RX_BYTES PcieUtilCounter = MXSMLEX_PCIE_UTIL_RX_BYTES
-	PCIE_UTIL_COUNT	   PcieUtilCounter = MXSMLEX_PCIE_UTIL_COUNT
+	PCIE_UTIL_COUNT    PcieUtilCounter = MXSMLEX_PCIE_UTIL_COUNT
 )
 
 type TemperatureThresholds = MxSmlExTemperatureThresholds
@@ -81,7 +82,7 @@ const (
 	TEMPERATURE_THRESHOLD_ACOUSTIC_MAX  TemperatureThresholds = MXSMLEX_TEMPERATURE_THRESHOLD_ACOUSTIC_MAX
 
 	// this threshold count is 8 in nvml, but 7 in mxsml
-	TEMPERATURE_THRESHOLD_COUNT	TemperatureThresholds = MXSMLEX_TEMPERATURE_THRESHOLD_COUNT
+	TEMPERATURE_THRESHOLD_COUNT TemperatureThresholds = MXSMLEX_TEMPERATURE_THRESHOLD_COUNT
 )
 
 type ClockType = MxSmlExClockType
