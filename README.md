@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/MetaX-MACA/go-mxsml"
+	"github.com/MetaX-MACA/go-mxsml/pkg/mxsml"
 )
 
 func main() {

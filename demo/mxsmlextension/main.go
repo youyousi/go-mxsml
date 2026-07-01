@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	nvml "go-mxsml/pkg/mxsmlextension"
+	nvml "github.com/MetaX-MACA/go-mxsml/pkg/mxsmlextension"
 )
 
 func main() {
@@ -116,7 +116,7 @@ func getDeviceInfo(index int) {
 	if ret != nvml.SUCCESS {
 		fmt.Printf("get remote pci info of device failed: %s\n", nvml.ErrorString(ret))
 	} else {
-		fmt.Printf("remote pci info, busId legacy: %s, domain: 0x%x, bus: 0x%x, device: 0x%x, deviceId: 0x%x, " +
+		fmt.Printf("remote pci info, busId legacy: %s, domain: 0x%x, bus: 0x%x, device: 0x%x, deviceId: 0x%x, "+
 			"subsystemId: 0x%x, busId: %s\n",
 			uint8SliceToString(pciInfo.BusIdLegacy[:]), pciInfo.Domain, pciInfo.Bus, pciInfo.Device,
 			pciInfo.PciDeviceId, pciInfo.PciSubSystemId, uint8SliceToString(pciInfo.BusId[:]))
@@ -267,7 +267,7 @@ func getDeviceInfo(index int) {
 	if ret != nvml.SUCCESS {
 		fmt.Printf("get pci info of device failed: %s\n", nvml.ErrorString(ret))
 	} else {
-		fmt.Printf("pci info: busId legacy: %s, domain: 0x%x, bus: 0x%x, device: 0x%x, deviceId: 0x%x, " +
+		fmt.Printf("pci info: busId legacy: %s, domain: 0x%x, bus: 0x%x, device: 0x%x, deviceId: 0x%x, "+
 			"subsystemId: 0x%x, busId: %s\n",
 			uint8SliceToString(pciInfo.BusIdLegacy[:]), pciInfo.Domain, pciInfo.Bus, pciInfo.Device,
 			pciInfo.PciDeviceId, pciInfo.PciSubSystemId, uint8SliceToString(pciInfo.BusId[:]))

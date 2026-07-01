@@ -5,8 +5,8 @@ package mxsml
 // #include <stdint.h>
 import "C"
 import (
-	"go-mxsml/pkg/lib"
-	"go-mxsml/pkg/utils"
+	"github.com/MetaX-MACA/go-mxsml/pkg/lib"
+	"github.com/MetaX-MACA/go-mxsml/pkg/utils"
 )
 
 type MxSmlWrapper struct {
@@ -17,7 +17,6 @@ var mxsmlWrapper = createMxsmlWrapper()
 func createMxsmlWrapper() *MxSmlWrapper {
 	return &MxSmlWrapper{}
 }
-
 
 func (m *MxSmlWrapper) mxSmlInit() MxSmlReturn {
 	err := lib.Load()
@@ -388,13 +387,13 @@ func (m *MxSmlWrapper) mxSmlGetDeviceDistance(deviceId1, deviceId2 uint32) (uint
 
 func (m *MxSmlWrapper) mxSmlGetCpuAffinity(deviceId uint32, cpuSetSize uint32) ([]uint32, MxSmlReturn) {
 	cpuSet := make([]uint32, cpuSetSize)
-	ret := mxSmlGetCpuAffinity(deviceId, cpuSetSize,  &cpuSet[0])
+	ret := mxSmlGetCpuAffinity(deviceId, cpuSetSize, &cpuSet[0])
 	return cpuSet, ret
 }
 
 func (m *MxSmlWrapper) mxSmlGetNodeAffinity(deviceId uint32, nodeSetSize uint32) ([]uint32, MxSmlReturn) {
 	nodeSet := make([]uint32, nodeSetSize)
-	ret := mxSmlGetNodeAffinity(deviceId, nodeSetSize,  &nodeSet[0])
+	ret := mxSmlGetNodeAffinity(deviceId, nodeSetSize, &nodeSet[0])
 	return nodeSet, ret
 }
 
@@ -453,7 +452,7 @@ func (m *MxSmlWrapper) mxSmlGetXcoreApUsage(deviceId uint32) ([]uint32, MxSmlRet
 	ret := mxSmlGetXcoreApUsage(deviceId, &apusage[0], &size, &dpmNum)
 	if ret == MXSML_InsufficientSize {
 		apusage = make([]uint32, size)
-		ret =  mxSmlGetXcoreApUsage(deviceId, &apusage[0], &size, &dpmNum)
+		ret = mxSmlGetXcoreApUsage(deviceId, &apusage[0], &size, &dpmNum)
 	}
 
 	if ret != MXSML_Success {
@@ -527,7 +526,7 @@ func (m *MxSmlWrapper) mxSmlGetOpticalModuleStatus(deviceId uint32) ([]MxSmlOpti
 	ret := mxSmlGetOpticalModuleStatus(deviceId, &opModuleStatus[0], &size)
 	if ret == MXSML_InsufficientSize {
 		opModuleStatus = make([]MxSmlOpticalModuleStatus, size)
-		ret = mxSmlGetOpticalModuleStatus(deviceId, &opModuleStatus[0],  &size)
+		ret = mxSmlGetOpticalModuleStatus(deviceId, &opModuleStatus[0], &size)
 	}
 
 	if ret != MXSML_Success {
@@ -543,7 +542,7 @@ func (m *MxSmlWrapper) mxSmlGetOpticalModuleInfo(deviceId uint32) ([]MxSmlOptica
 	ret := mxSmlGetOpticalModuleInfo(deviceId, &opModuleInfo[0], &size)
 	if ret == MXSML_InsufficientSize {
 		opModuleInfo = make([]MxSmlOpticalModuleInfo, size)
-		ret = mxSmlGetOpticalModuleInfo(deviceId, &opModuleInfo[0],  &size)
+		ret = mxSmlGetOpticalModuleInfo(deviceId, &opModuleInfo[0], &size)
 	}
 
 	if ret != MXSML_Success {
@@ -587,7 +586,7 @@ func (m *MxSmlWrapper) mxSmlFunctionLevelResetVfFromPf(deviceId uint32) MxSmlRet
 	return mxSmlFunctionLevelResetVfFromPf(deviceId)
 }
 
-func  (m *MxSmlWrapper) mxSmlSetUnlockKey(deviceId uint32, unlockKey string) MxSmlReturn {
+func (m *MxSmlWrapper) mxSmlSetUnlockKey(deviceId uint32, unlockKey string) MxSmlReturn {
 	return mxSmlSetUnlockKey(deviceId, unlockKey)
 }
 
@@ -789,7 +788,7 @@ func (m *MxSmlWrapper) mxSmlGetDieXcoreApUsage(deviceId, dieId uint32) ([]uint32
 	ret := mxSmlGetDieXcoreApUsage(deviceId, dieId, &apusage[0], &size, &dpmNum)
 	if ret == MXSML_InsufficientSize {
 		apusage = make([]uint32, size)
-		ret =  mxSmlGetDieXcoreApUsage(deviceId, dieId, &apusage[0], &size, &dpmNum)
+		ret = mxSmlGetDieXcoreApUsage(deviceId, dieId, &apusage[0], &size, &dpmNum)
 	}
 
 	if ret != MXSML_Success {

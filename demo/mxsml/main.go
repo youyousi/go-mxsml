@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"go-mxsml/pkg/mxsml"
+	"github.com/MetaX-MACA/go-mxsml/pkg/mxsml"
 )
 
 func getProcessInfo(deviceCount uint32) {
@@ -17,7 +17,7 @@ func getProcessInfo(deviceCount uint32) {
 	}
 
 	if processNum <= 0 {
-	   return
+		return
 	}
 
 	processInfo := make([]mxsml.MxSmlProcessInfo, processNum)
@@ -94,7 +94,7 @@ func getDeviceStats(id uint32) {
 	if ret != mxsml.MXSML_Success {
 		fmt.Printf("get hotspot temperature failed: %s\n", mxsml.MxSmlGetErrorString(ret))
 	} else {
-		fmt.Printf("hotspot temperature: %.2f C\n", float32(temperature) / 100.0)
+		fmt.Printf("hotspot temperature: %.2f C\n", float32(temperature)/100.0)
 	}
 
 	boardPowerInfo, ret := mxsml.MxSmlGetBoardPowerInfo(id)
@@ -336,14 +336,14 @@ func getDeviceStats(id uint32) {
 		fmt.Printf("apusage toggle: %d\n", apUsageToggle)
 	}
 
-	if ret := mxsml.MxSmlSetApUsageToggle(id, 1);ret == mxsml.MXSML_Success {
+	if ret := mxsml.MxSmlSetApUsageToggle(id, 1); ret == mxsml.MXSML_Success {
 		fmt.Println("set ap usage toggle to 1 succeeded")
 		if apUsageToggle, ret = mxsml.MxSmlGetApUsageToggle(id); ret == mxsml.MXSML_Success {
 			fmt.Printf("apusage toggle: %d\n", apUsageToggle)
 		}
 	} else {
 		fmt.Printf("set apusage toggle to 1 failed: %s\n", mxsml.MxSmlGetErrorString(ret))
-    }
+	}
 
 	logLevel, ret := mxsml.MxSmlGetFwLoglevel(id)
 	if ret != mxsml.MXSML_Success {
@@ -493,7 +493,7 @@ func getDeviceStats(id uint32) {
 	fmt.Println("MetaxLink remote info:")
 	for i := range mxsml.MXSML_METAX_LINK_NUM + 1 {
 		if remoteInfo, ret := mxsml.MxSmlGetMetaXLinkRemoteInfo(id, uint32(i)); ret == mxsml.MXSML_Success {
-			fmt.Printf("PORT#%d,device id: %d, bdf id: %s\n",i, remoteInfo.DeviceId, uint8SliceToString(remoteInfo.BdfId[:]))
+			fmt.Printf("PORT#%d,device id: %d, bdf id: %s\n", i, remoteInfo.DeviceId, uint8SliceToString(remoteInfo.BdfId[:]))
 		}
 	}
 
@@ -530,7 +530,7 @@ func main() {
 	if pfCount > 0 {
 		fmt.Printf("get pf device count: %d\n", pfCount)
 		var pfId uint32 = 100
-		for ; pfId < 100 + pfCount; pfId++ {
+		for ; pfId < 100+pfCount; pfId++ {
 			virtaulIds, ret := mxsml.MxSmlGetVirtualDevicesByPhysicalId(pfId)
 			if ret == mxsml.MXSML_Success {
 				fmt.Printf("get virtual devices Id: %+v\n", virtaulIds)
@@ -546,8 +546,8 @@ func main() {
 			if ret != mxsml.MXSML_Success {
 				fmt.Printf("get limited device info failed: %s\n", mxsml.MxSmlGetErrorString(ret))
 				continue
-            }
-			fmt.Printf("limited device Id: %d, type: %d, bdfId: %s, gpuId: %d, nodeId: %d, " +
+			}
+			fmt.Printf("limited device Id: %d, type: %d, bdfId: %s, gpuId: %d, nodeId: %d, "+
 				"uuid: %s, band: %d, mode: %d, device name: %s\n",
 				limitedDevice.DeviceId, limitedDevice.Type, uint8SliceToString(limitedDevice.BdfId[:]),
 				limitedDevice.GpuId, limitedDevice.NodeId, uint8SliceToString(limitedDevice.Uuid[:]),
@@ -796,8 +796,8 @@ func uint8SliceToString(slice []int8) string {
 }
 
 func printDeviceInfo(devInfo *mxsml.MxSmlDeviceInfo) {
-	fmt.Printf("deviceId: %d, type: %d, bdfId: %s," +
-		"gpuId: %d, nodeId: %d, Uuid: %s, " +
+	fmt.Printf("deviceId: %d, type: %d, bdfId: %s,"+
+		"gpuId: %d, nodeId: %d, Uuid: %s, "+
 		"brand: %d, mode: %d, DeviceName: %s\n",
 		devInfo.DeviceId, devInfo.Type, uint8SliceToString(devInfo.BdfId[:]),
 		devInfo.GpuId, devInfo.NodeId, uint8SliceToString(devInfo.Uuid[:]),
@@ -806,7 +806,7 @@ func printDeviceInfo(devInfo *mxsml.MxSmlDeviceInfo) {
 
 func printRasErrorData(rasErrorData *mxsml.MxSmlRasErrorData) {
 	fmt.Println("ras error data:")
-	for i := range(int(rasErrorData.ShowRasErrorSize)) {
+	for i := range int(rasErrorData.ShowRasErrorSize) {
 		fmt.Printf("ras ip: %d, ue: %d, ce: %d\n",
 			rasErrorData.RasErrorRegister[i].RasIp,
 			rasErrorData.RasErrorRegister[i].RasErrorUe,
@@ -817,7 +817,7 @@ func printRasErrorData(rasErrorData *mxsml.MxSmlRasErrorData) {
 
 func printRasErrorData_v2(rasStatusData *mxsml.MxSmlRasErrorData_v2) {
 	fmt.Println("ras error data v2:")
-	for i := range(int(rasStatusData.ShowRasErrorSize)) {
+	for i := range int(rasStatusData.ShowRasErrorSize) {
 		fmt.Printf("ras ip: %d, ue: %d, ce: %d\n",
 			rasStatusData.RasErrorRegister[i].RasIp,
 			rasStatusData.RasErrorRegister[i].RasErrorUe,
@@ -828,7 +828,7 @@ func printRasErrorData_v2(rasStatusData *mxsml.MxSmlRasErrorData_v2) {
 
 func printRasStatusData(rasStatusData *mxsml.MxSmlRasStatusData) {
 	fmt.Println("ras status data:")
-	for i := range(int(rasStatusData.ShowRasStatusSize)) {
+	for i := range int(rasStatusData.ShowRasStatusSize) {
 		fmt.Printf("ras ip: %d, index: %d, register data: 0x%x\n",
 			rasStatusData.RasStatusRegister[i].RasIp,
 			rasStatusData.RasStatusRegister[i].RegisterIndex,
