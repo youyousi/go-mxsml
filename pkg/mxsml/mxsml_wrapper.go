@@ -5,8 +5,8 @@ package mxsml
 // #include <stdint.h>
 import "C"
 import (
-	"github.com/MetaX-MACA/go-mxsml/pkg/lib"
-	"github.com/MetaX-MACA/go-mxsml/pkg/utils"
+	"go-mxsml/pkg/lib"
+	"go-mxsml/pkg/utils"
 )
 
 type MxSmlWrapper struct {

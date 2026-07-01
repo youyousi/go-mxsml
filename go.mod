@@ -1,3 +1,3 @@
-module github.com/MetaX-MACA/go-mxsml
+module go-mxsml
 
 go 1.23.3

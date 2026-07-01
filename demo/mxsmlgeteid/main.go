@@ -6,8 +6,13 @@ import (
 	"sync"
 	"log"
 
+<<<<<<< HEAD
 	"github.com/MetaX-MACA/go-mxsml/pkg/mxsml"
 	"github.com/MetaX-MACA/go-mxsml/pkg/utils"
+=======
+	"go-mxsml/pkg/mxsml"
+	"go-mxsml/pkg/utils"
+>>>>>>> a2627eabcd884a9da71a1d2f6fc9189c695a8430
 )
 
 func main() {
