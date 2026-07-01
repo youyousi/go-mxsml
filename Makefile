@@ -14,6 +14,7 @@ all: demo
 demo:
 	go build -o $(DEMO_BIN)/mxsmlDemo     ./demo/mxsml
 	go build -o $(DEMO_BIN)/mxsmlExtDemo  ./demo/mxsmlextension
+	go build -o $(DEMO_BIN)/mxsmlGetEidDemo  ./demo/mxsmlgeteid
 
 .PHONY: gen
 gen:

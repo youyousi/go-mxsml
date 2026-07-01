@@ -4,7 +4,7 @@ package mxsmlextension
 import (
 	"unsafe"
 
-	"github.com/MetaX-MACA/go-mxsml/pkg/utils"
+	"go-mxsml/pkg/utils"
 )
 
 const MXSMLEX_SYSTEM_MXSMLEX_VERSION_BUFFER_SIZE = 80

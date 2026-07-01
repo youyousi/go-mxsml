@@ -2872,6 +2872,68 @@ typedef struct MxSmlEthThroughput {
  */
 mxSmlReturn_t DECLDIR mxSmlGetEthThroughput(unsigned int deviceId, mxSmlEthThroughput_t* ethThroughput);
 
+#define mxSmlEventTypeEid 0x0000000000000001LL  //! Event that eid occurred
+
+typedef struct mxSmlEventSetImpl_t* mxSmlEventSet_t;
+
+/**
+ * @brief create an empty set of events, event set should be freed by mxSmlEventSetFree
+ *
+ * @param[out] eventSet : reference in which to return the event handle
+ *
+ * @retval MXSML_Success         call was successful
+ * @retval MXSML_BusyDevice      too many eventSet
+ * @retval MXSML_Failure         create event set failed
+*/
+mxSmlReturn_t DECLDIR mxSmlEventSetCreate(mxSmlEventSet_t* eventSet);
+
+/**
+ * @brief add the events to specified event set, preparation for mxSmlEventSetWait
+ *
+ * @param[in] deviceId : the device index
+ * @param[in] eventTypes : bitmask of event types to record
+ * @param[in] eventSet : reference in which to events to be regitered
+ *
+ * @retval MXSML_Success            call was successful
+ * @retval MXSML_InvalidDeviceId    deviceId is out of range
+ * @retval MXSML_InvalidInput       eventTypes/eventSet is invalid or eventSet has been registered
+ * @retval MXSML_Failure            eventSet is not registered
+*/
+mxSmlReturn_t DECLDIR mxSmlDeviceRegisterEvents(unsigned int deviceId, unsigned long long eventTypes, mxSmlEventSet_t eventSet);
+
+#define EVENT_DATA_SIZE 1024          //!< Guaranteed maximum possible size for event data
+/**
+ * @brief This structure holds eid info
+ */
+typedef struct MxSmlEvent {
+    int deviceId;
+    int type;
+    char eventData[EVENT_DATA_SIZE];
+} mxSmlEvent_t;
+
+/**
+ * @brief wait on events
+ *
+ * @param[in] eventSet : reference to event set to wait on
+ * @param[out] data : reference in which to return event data
+ *
+ * @retval MXSML_Success            call was successful
+ * @retval MXSML_InvalidDeviceId    deviceId is out of range
+ * @retval MXSML_InvalidInput       data is null
+ * @retval MXSML_Failure            eventSet is not registered
+*/
+mxSmlReturn_t DECLDIR mxSmlEventSetWait(mxSmlEventSet_t eventSet, mxSmlEvent_t* data);
+
+/**
+ * @brief release event set
+ *
+ * @param[in] eventSet : reference to event set to be released
+ *
+ * @retval MXSML_Success     call was successful
+ * @retval MXSML_Failure     release some resourses failed
+*/
+mxSmlReturn_t DECLDIR mxSmlEventSetFree(mxSmlEventSet_t eventSet);
+
 #ifdef __cplusplus
 }
 #endif
